@@ -1,0 +1,37 @@
+Ionic 2 cache service
+=====================
+
+A simple cache provider solution written in typerscript for Ionic 2.
+
+## Using this project
+
+You'll need the last Ionic CLI with support for v2 apps:
+More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/docs/v2/getting-started/) page.
+
+## Dependencies
+
+This provider require a md5 hash implementation written in typescript, you find more info on github [ts-md5](https://github.com/cotag/ts-md5) page.
+
+## Using the cache Service
+
+This provider has been implemented for use only Promises to saving on the cache.
+
+#### Generate a md5 hash:
+```typescript
+let key: Int32Array| string = this._cache.getKey('my string'); // This method return a md5 hash
+```
+
+#### Getting Promise cached
+```typescript
+if (this._cache.cacheExists(key)) {
+	this._cache.getKey('my string'); // This method return a md5 hash
+}
+```
+
+#### Setting Promise
+```typescript
+this._cache.setCache(key, promise).then(
+  (index) => {
+  	console.log(index);
+  });
+```
