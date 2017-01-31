@@ -24,7 +24,7 @@ let key: Int32Array| string = this._cache.getKey('my string'); // This method re
 #### Getting Promise cached
 ```typescript
 if (this._cache.cacheExists(key)) {
-	this._cache.getKey('my string'); // This method return a md5 hash
+	let promise: Promise<any> = this._cache.getCache(key); // Return promise cached
 }
 ```
 
