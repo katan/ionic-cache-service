@@ -1,7 +1,7 @@
 Ionic 2 cache service
 =====================
 
-A simple cache provider solution written in typerscript for Ionic 2.
+A simple cache provider solution written in typescript for Ionic 2.
 
 ## Using this project
 
