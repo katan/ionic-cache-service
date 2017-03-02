@@ -30,12 +30,12 @@ export class ListPage {
         resolve(['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane','american-football', 'boat', 'bluetooth', 'build']);
       });
 
-    if (this._cache.cacheExists(key)) {
-      this.generateItems(this._cache.getCache(key));
+    if (this._cache.exists(key)) {
+      this.generateItems(this._cache.get(key));
       console.log('cache with key: '+ key +' exists');
     } else {
         // Save a Promise on the cache Provider
-        this._cache.setCache(key, promise).then(
+        this._cache.set(key, promise).then(
           (index) => {
             this.generateItems(promise);
             console.log('cache with key: '+ key +' saved');

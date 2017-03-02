@@ -23,15 +23,15 @@ export class HelloIonicPage {
 	  });
 	});
 
-	if (this._cache.cacheExists(key)) {
-	   this._cache.getCache(key).then(
+	if (this._cache.exists(key)) {
+	   this._cache.get(key).then(
 	      (data) => {
 	        console.log(data);
 	        console.log('cache with key: '+ key +' exists');
 	      })
 	} else {
 	    // Save a Promise on the cache Provider
-	    this._cache.setCache (key, promise);
+	    this._cache.set (key, promise);
 	    console.log('cache with key: '+ key +' saved')
 	}
   }

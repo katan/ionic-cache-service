@@ -12,7 +12,7 @@ export class CacheService {
 
 	constructor() {
 		try {
-			this._cacheMap = []; 	// ["md5", "md5", ...]
+			this._cacheMap = []; 	// ["md5: string", "md5: string", ...]
 			this._cache = [];		// [Promise, Promise, ...]
 		} catch (error) {
 			throw new Error(error);
@@ -25,10 +25,10 @@ export class CacheService {
 	 * @param  {Promise<any>}  		value 	Promise data to save on the cache (Example: A sqlite result)
 	 * @return {Promise<any>}        		resolve: return the index where promise has been saved
 	 */
-	public setCache (key: Int32Array | string, value: Promise<any>): Promise<any> {
+	public set (key: Int32Array | string, value: Promise<any>): Promise<any> {
 		return new Promise((resolve, reject) => {
 			try {
-				if (!this.cacheExists(key)) {
+				if (!this.exists(key)) {
 					// Save key on cache map
 					this._cacheMap.push(key.toString());
 					// Save promise
@@ -48,11 +48,30 @@ export class CacheService {
 	 * @param  {Int32Array|string}	key 	A unique md5 hash key
 	 * @return {Promise<any>}
 	 */
-	public getCache (key: Int32Array | string): Promise<any> {
+	public get (key: Int32Array | string): Promise<any> {
 		try {
-			if (this.cacheExists(key)) {
+			if (this.exists(key)) {
 				let index = this._cacheMap.indexOf(key.toString());
 				return this._cache[index];
+			}
+			return Promise.reject('No cache exists for ' + key);
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+	/**
+	 * Remove key and their cache
+	 * @param  {Int32Array|string}	key 	A unique md5 hash key
+	 * @return {Promise<any>}
+	 */
+	public remove (key: Int32Array | string): Promise<any>{
+		try {
+			if (this.exists(key)) {
+				let index = this._cacheMap.indexOf(key.toString());
+				this._cacheMap.splice(index, 1);
+				this._cache.splice(index, 1);
+				return Promise.resolve();
 			}
 			return Promise.reject('No cache exists for ' + key);
 		} catch (error) {
@@ -78,7 +97,7 @@ export class CacheService {
 	 * @param  {Int32Array | string}      key [description]
 	 * @return {boolean}         [description]
 	 */
-	public cacheExists (key: Int32Array | string): boolean {
+	public exists (key: Int32Array | string): boolean {
 		try {
 			return this._cacheMap.indexOf(key.toString()) > -1;
 		} catch (error) {
