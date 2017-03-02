@@ -23,15 +23,23 @@ let key: Int32Array| string = this._cache.getKey('my string'); // This method re
 
 #### Getting Promise cached
 ```typescript
-if (this._cache.cacheExists(key)) {
-	let promise: Promise<any> = this._cache.getCache(key); // Return promise cached
+if (this._cache.exists(key)) {
+	let promise: Promise<any> = this._cache.get(key); // Return promise cached
 }
 ```
 
 #### Setting Promise
 ```typescript
-this._cache.setCache(key, promise).then(
+this._cache.set(key, promise).then(
   (index) => {
   	console.log(index);
+  });
+```
+
+#### Remove cache (map and their promise)
+```typescript
+this._cache.remove(key).then(
+  () => {
+  	//...
   });
 ```
